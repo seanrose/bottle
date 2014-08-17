@@ -1,4 +1,12 @@
-// Format: after:2014/5/3 before:2014/5/4
+/**
+ * Returns a historical Gmail URL
+ * based on the date passed in
+ * yearsInThePast years back from the current date
+ *
+ * @param <Date> date
+ * @param <Integer> yearsInThePast
+ * @return <String> combinedURL
+ */
 function historicalSearchURL(date, yearsInThePast) {
 	// creating a copy because idk how to javascript tbh
 	var dateCopy = new Date(date);
@@ -15,6 +23,15 @@ function historicalSearchURL(date, yearsInThePast) {
 	return combinedURL;
 }
 
+/**
+ * Creates a formatted date string
+ * YYYY/MM/DD
+ * given a Date object and years in the past
+ *
+ * @param <Date> date
+ * @param <Integer> yearsInThePast
+ * @return <String>
+ */
 function historicalDate(date, yearsInThePast) {
 	var year = date.getFullYear() - yearsInThePast;
 	var month = date.getMonth() + 1;
@@ -22,6 +39,15 @@ function historicalDate(date, yearsInThePast) {
 	return year + '/' + month + '/' + day;
 }
 
+/**
+ * Returns a shade of blue that
+ * is lighter based on
+ * number of years in the past
+ * returns an rgba string
+ *
+ * @param <Integer> yearsInThePast
+ * @return <String>
+ */
 function historicalColor(yearsInThePast) {
 	var baseBlue = 149;
 	var increment = 15;
@@ -31,6 +57,13 @@ function historicalColor(yearsInThePast) {
 	return 'rgba(34, 110, ' + blue +', 1)';
 }
 
+/**
+ * tbh i copied this from stackoverflow
+ * and have no idea what it does
+ *
+ * @param <String> name
+ * @returns <String>
+ */
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -39,7 +72,14 @@ function getParameterByName(name) {
 }
 
 Template.bottle.helpers({
-    historicalURLs: function() {
+
+	/**
+	 * Generates an array of historical URLs
+	 * based on the provided number of years back
+	 *
+	 * @returns <Array>
+	 */
+ 	historicalURLs: function() {
         var histories = [];
         // TODO(seanrose): un-hardcode numYears
         var numYears = getParameterByName('years') || 4;
