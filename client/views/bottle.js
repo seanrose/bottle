@@ -61,4 +61,5 @@ Template.bottle.rendered = function () {
 	$('a').delay('fast').each( function(index, value) {
 		$(value).delay(300 * index).fadeIn('slow');
 	});
+	GAnalytics.pageview();
 };
