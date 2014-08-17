@@ -7,7 +7,7 @@
  * @param <Integer> yearsInThePast
  * @return <String> combinedURL
  */
-function historicalSearchURL(date, yearsInThePast) {
+function historicalSearchURL(date, yearsInThePast, accountIndex) {
 	// creating a copy because idk how to javascript tbh
 	var dateCopy = new Date(date);
 	var year = dateCopy.getFullYear() - yearsInThePast;
@@ -17,7 +17,7 @@ function historicalSearchURL(date, yearsInThePast) {
 	dateCopy.setDate(dateCopy.getDate() + 1);
 	var beforeComponent = 'before:' + historicalDate(dateCopy, yearsInThePast);
 
-	var baseURL = 'https://mail.google.com/mail/#search/';
+	var baseURL = 'https://mail.google.com/mail/u/'+ accountIndex + '/#search/';
 	var combinedURL = baseURL + encodeURIComponent(afterComponent) + '+' + encodeURIComponent(beforeComponent);
 
 	return combinedURL;
@@ -71,6 +71,23 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+/**
+ * Turns an object to a query string
+ * and appends it to the current path
+ *
+ * @param <Object> params
+ */
+function updateURL(params) {
+	var str = [];
+  	for(var p in params) {
+    	if (params.hasOwnProperty(p)) {
+    		str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
+    	}
+  	}
+  	var queryString = str.join('&');
+	window.history.pushState('', '', '/?' + queryString);
+}
+
 Template.bottle.helpers({
 
 	/**
@@ -83,12 +100,18 @@ Template.bottle.helpers({
         var histories = [];
         // TODO(seanrose): un-hardcode numYears
         var numYears = getParameterByName('years') || 4;
+        var accountIndex = getParameterByName('u') || 0;
+        updateURL({
+        	u: accountIndex,
+        	years: numYears
+        });
+
         var currentDate = new Date();
 
         for (var i = numYears; i > 0; i--) {
         	histories.push({
         		text: i + ' ' + (i == 1 ? 'year' : 'years') + ' ago',
-        		url: historicalSearchURL(currentDate, i),
+        		url: historicalSearchURL(currentDate, i, accountIndex),
         		color: historicalColor(i)
         	});
         }
