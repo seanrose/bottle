@@ -1,7 +1,11 @@
 <template name="bottle">
-<ul>
-{{#each historicalURLs}}
-	<li><a href="{{url}}" target="_blank">{{text}}</a></li>
-{{/each}}
-</ul>
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+		{{#each historicalURLs}}
+		<h1 class="text-center">
+			<a href="{{url}}" target="_blank">{{text}}</a>
+		</h1>
+		{{/each}}
+	</div>
+</div>
 </template>
