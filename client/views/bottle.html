@@ -1,11 +1,15 @@
 <template name="bottle">
-<div class="row">
-	<div class="col-md-4 col-md-offset-4">
-		{{#each historicalURLs}}
-		<h1 class="text-center">
-			<a href="{{url}}" target="_blank">{{text}}</a>
-		</h1>
-		{{/each}}
+<row>
+	<div class="col-md-8 col-md-offset-2 text-center">
+		<h1 class="text-center">Here's how your Gmail inbox looked...</h1>
 	</div>
-</div>
+</row>
+<row>
+	<div class="col-md-6 col-md-offset-3 text-center">
+	{{#each historicalURLs}}
+		<a href="{{url}}" style="color:{{color}};"  target="_blank">{{text}}</a>
+		<br>
+	{{/each}}
+	</div>
+</row>
 </template>

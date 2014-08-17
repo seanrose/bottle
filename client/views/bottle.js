@@ -22,20 +22,37 @@ function historicalDate(date, yearsInThePast) {
 	return year + '/' + month + '/' + day;
 }
 
+function historicalColor(yearsInThePast) {
+	var baseBlue = 149;
+	var increment = 15;
+
+	var blue = baseBlue + increment * yearsInThePast;
+
+	return 'rgba(34, 110, ' + blue +', 1)';
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 Template.bottle.helpers({
     historicalURLs: function() {
         var histories = [];
         // TODO(seanrose): un-hardcode numYears
-        var numYears = 4;
+        var numYears = getParameterByName('years') || 4;
         var currentDate = new Date();
 
         for (var i = numYears; i > 0; i--) {
         	histories.push({
         		text: i + ' ' + (i == 1 ? 'year' : 'years') + ' ago',
-        		url: historicalSearchURL(currentDate, i)
+        		url: historicalSearchURL(currentDate, i),
+        		color: historicalColor(i)
         	});
         }
 
-        return histories;
+        return histories.reverse();
     }
 });
