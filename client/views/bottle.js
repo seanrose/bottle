@@ -56,3 +56,9 @@ Template.bottle.helpers({
         return histories.reverse();
     }
 });
+
+Template.bottle.rendered = function () {
+	$('a').delay('fast').each( function(index, value) {
+		$(value).delay(300 * index).fadeIn('slow');
+	});
+};
