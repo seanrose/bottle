@@ -9,7 +9,7 @@ function historicalSearchURL(date, yearsInThePast) {
 	dateCopy.setDate(dateCopy.getDate() + 1);
 	var beforeComponent = 'before:' + historicalDate(dateCopy, yearsInThePast);
 
-	var baseURL = 'https://mail.google.com/mail/u/1/#search/';
+	var baseURL = 'https://mail.google.com/mail/#search/';
 	var combinedURL = baseURL + encodeURIComponent(afterComponent) + '+' + encodeURIComponent(beforeComponent);
 
 	return combinedURL;
