@@ -17,10 +17,9 @@ function historicalSearchURL(date, yearsInThePast, accountIndex) {
 	dateCopy.setDate(dateCopy.getDate() + 1);
 	var beforeComponent = 'before:' + historicalDate(dateCopy, yearsInThePast);
 
-	var baseURL = 'https://mail.google.com/mail/u/'+ accountIndex + '/#search/';
-	var combinedURL = baseURL + encodeURIComponent(afterComponent) + '+' + encodeURIComponent(beforeComponent);
+	var url = baseURL(accountIndex) + encodeURIComponent(afterComponent) + '+' + encodeURIComponent(beforeComponent);
 
-	return combinedURL;
+	return url;
 }
 
 /**
@@ -86,6 +85,42 @@ function updateURL(params) {
   	}
   	var queryString = str.join('&');
 	window.history.pushState('', '', '/?' + queryString);
+}
+
+/**
+ * Returns true if the user-agent is
+ * a mobile device
+ *
+ * @returns <Boolean>
+ */
+function isMobile() {
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ 		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Turns an object to a query string
+ * and appends it to the current path
+ *
+ * @param <Integer> accountIndex
+ * @returns <String> baseURL
+ */
+function baseURL(accountIndex) {
+	var firstPart = '';
+	var secondPart = '';
+	if (isMobile()) {
+		firstPart = 'https://mail.google.com/mail/mu/mp/';
+		secondPart = '#tl/search/';
+	} else {
+		firstPart = 'https://mail.google.com/mail/u/';
+		secondPart = '#search/';
+	}
+
+	var url =  firstPart + accountIndex + secondPart;
+	return url;
 }
 
 Template.bottle.helpers({
