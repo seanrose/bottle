@@ -121,8 +121,9 @@ Template.bottle.helpers({
 });
 
 Template.bottle.rendered = function () {
-	$('a').delay('fast').each( function(index, value) {
+	$('.year').delay('fast').each( function(index, value) {
 		$(value).delay(300 * index).fadeIn('slow');
 	});
+	$('.signature').delay($('a').length * 300 + 1000).fadeIn('slow');
 	GAnalytics.pageview();
 };
