@@ -116,7 +116,7 @@ function baseURL(accountIndex) {
 		secondPart = '#tl/search/';
 	} else {
 		firstPart = 'https://mail.google.com/mail/u/';
-		secondPart = '#search/';
+		secondPart = '/#search/';
 	}
 
 	var url =  firstPart + accountIndex + secondPart;
